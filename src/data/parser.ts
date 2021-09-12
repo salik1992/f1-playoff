@@ -22,6 +22,8 @@ const driverLineToDriver = (line: string): Driver => {
         finishesCount: {},
         points: 0,
         pointsFromLastRace: 0,
+        isInPlayOff: false,
+        playOffPoints: 0,
     }
 }
 

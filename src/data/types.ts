@@ -4,6 +4,8 @@ export type Driver = {
     points: number,
     pointsFromLastRace: number,
     finishesCount: Record<number, number>,
+    isInPlayOff: boolean,
+    playOffPoints: number,
 };
 
 export type Season = {
