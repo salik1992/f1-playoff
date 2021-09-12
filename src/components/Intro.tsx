@@ -1,3 +1,4 @@
+import { SeasonPicker } from './SeasonPicker';
 import { H1, H2, P, Ul, Li } from './Texts';
 
 
@@ -83,5 +84,6 @@ export const Intro = () => (
                 Top 4 have 1 race that decides it all.
             </Li>
         </Ul>
+        <SeasonPicker />
     </>
 );

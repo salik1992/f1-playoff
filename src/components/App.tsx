@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Intro } from './Intro';
+import { SeasonRunner } from './SeasonRunner';
 
 const Wrap = styled.div`
     margin: auto;
@@ -24,6 +25,7 @@ export const App = () => {
             <Styles />
             <BrowserRouter>
                 <Switch>
+                    <Route path="/:season/:championshipStyle" component={SeasonRunner} />
                     <Route path="/" component={Intro} />
                 </Switch>
             </BrowserRouter>
