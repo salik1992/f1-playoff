@@ -1,1 +1,1 @@
-export const RACE_LENGTH = 2000;
+export const RACE_LENGTH = 3500;
