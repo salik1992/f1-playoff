@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
 import { map, reverse } from '@salik1992/fun-ts/dist/array';
 import { PATHS } from '../data/paths';
 import { Controllers } from '../controllers';
+import { Params } from './types';
 
 const SEASONS = reverse((Object.keys(PATHS)));
 
@@ -12,15 +14,32 @@ const TEXTS = {
     [Controllers.NASCAR_PLAYOFF]: 'NASCAR Play Off',
 } as const;
 
+const Wrapper = styled.div`
+    text-align: center;
+
+    a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #00dd00;
+        border: 1px solid #009900;
+        text-decoration: none;
+    }
+`;
+
 export const SeasonPicker = () => {
-    const [season, setSeason] = useState(SEASONS[0])
-    const [championshipStyle, setChampionshipStyle] = useState(Controllers.F1_CLASSIC);
+    const {
+        season: initialSeason,
+        championshipStyle: initialChampionshipStyle,
+    } = useParams<Params>();
+
+    const [season, setSeason] = useState(initialSeason)
+    const [championshipStyle, setChampionshipStyle] = useState(initialChampionshipStyle);
 
     return (
-        <div>
+        <Wrapper>
             <select
                 value={season}
-                onChange={(e) => setSeason(e.target.value)}
+                onChange={(e) => setSeason(e.target.value as keyof typeof PATHS)}
             >
                 {map<string, JSX.Element>((season) => (
                     <option key={`season-picker-${season}`} value={season}>
@@ -38,9 +57,10 @@ export const SeasonPicker = () => {
                     </option>
                 ))(Object.keys(TEXTS) as Controllers[])}
             </select>
+            <br />
             <Link to={`/${season}/${championshipStyle}`}>
                 Run the season
             </Link>
-        </div>
+        </Wrapper>
     )
 };

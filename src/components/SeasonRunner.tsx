@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { map } from '../../node_modules/@salik1992/fun-ts/dist/array';
-import { Controllers, getController } from '../controllers';
+import { getController } from '../controllers';
 import { SeasonController } from '../controllers/interface';
 import { Driver } from '../data';
-import { PATHS } from '../data/paths';
 import { DriverView } from './Driver';
 import { DriversGroup } from './DriversGroup';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, H2 } from './Texts';
-
-type Params = {
-    season: keyof typeof PATHS,
-    championshipStyle: Controllers,
-};
+import { Params } from './types';
 
 type RaceState = {
     race: string,
