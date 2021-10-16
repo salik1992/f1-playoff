@@ -20,6 +20,7 @@ const driverLineToDriver = (line: string): Driver => {
         name,
         results: getResults(results),
         finishesCount: {},
+        position: 0,
         points: 0,
         pointsFromLastRace: 0,
         isInPlayOff: false,
@@ -44,7 +45,7 @@ export const parseSeason = (csv: string): Season => {
         getValues,
     )(pointsLine);
     forEach<number>((points, index) => {
-        awardedPoints[index] = points
+        awardedPoints[index + 1] = points
     })(points);
     const races = getValues(racesLine);
     const halfPoints = compose(

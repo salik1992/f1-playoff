@@ -1,6 +1,7 @@
 export type Driver = {
     name: string,
     results: (number | null)[],
+    position: number,
     points: number,
     pointsFromLastRace: number,
     finishesCount: Record<number, number>,
