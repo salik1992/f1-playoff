@@ -17,7 +17,7 @@ export const Intro = () => (
         <P>
             The goal of this exercise is to discover and show what implications it might
             have on the known scenarios. There are some pros and cons to this approach.
-            The main advantage might be nearly guarateed fight to the last race.
+            The main advantage might be nearly guaranteed fight to the last race.
             The main disadvantage would be unfair result if driver who dominated the main
             part of the season would loose because of two unlucky races.
         </P>
