@@ -1,34 +1,18 @@
-import { loadSeason, PATHS, Season } from '../data';
-import { SeasonController } from './interface';
+import { SeasonControllerPlayoffBase } from './SeasonControllerPlayoffBase';
 
-export class F1PlayOff implements SeasonController {
-    season: Season | null = null;
+const PLAYOFF_1 = <const>{
+    at: 7,
+    cutoff: 8,
+};
+const PLAYOFF_2 = <const>{
+    at: 5,
+    cutoff: 6,
+};
+const PLAYOFF_3 = <const>{
+    at: 3,
+    cutoff: 4,
+};
 
-    setters = {
-        setRaceIndex: (_: number | ((_: number) => number)) => {},
-    };
-
-    async init(season: keyof typeof PATHS) {
-        this.season = await loadSeason(season);
-    }
-
-    destruct() {
-
-    }
-
-    isPlayOffRunning() {
-        return false;
-    }
-
-    getRegularDrivers() {
-        return this.season!.drivers;
-    }
-
-    getPlayOffDrivers() {
-        return this.season!.drivers;
-    }
-
-    getRace() {
-        return this.season!.races[0];
-    }
+export class F1PlayOff extends SeasonControllerPlayoffBase {
+    playoffStages = [PLAYOFF_1, PLAYOFF_2, PLAYOFF_3]
 }

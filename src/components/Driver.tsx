@@ -4,9 +4,11 @@ import { Driver } from "../data";
 type Props = {
     offsetIndex: number,
     driver: Driver,
+    isInPlayoff?: true,
+    playoffRunners?: number,
 }
 
-const HEIGHT = 50;
+export const HEIGHT = 50;
 
 const DriverWrap = styled.div`
     position: absolute;
@@ -26,7 +28,7 @@ const DriverWrap = styled.div`
 
     .position, .points, .points-from-last-race {
         padding: 0 20px;
-        min-width: 20px;
+        min-width: 40px;
         font-weight: bold;
     }
 
@@ -48,18 +50,18 @@ const DriverWrap = styled.div`
 `;
 
 export const DriverView = ({
-    offsetIndex, driver: {
-        position, name, points, pointsFromLastRace,
+    offsetIndex, isInPlayoff, playoffRunners = 0, driver: {
+        position, name, points, playOffPoints, pointsFromLastRace,
     } }: Props) => (
     <DriverWrap style={{ transform: `translateY(${offsetIndex * HEIGHT}px)` }}>
         <div className="position">
-            {position + 1}
+            {position + 1 + (!isInPlayoff ? playoffRunners : 0)}
         </div>
         <div className="name">
             {name}
         </div>
         <div className="points">
-            {points}
+            {isInPlayoff ? playOffPoints : points}
         </div>
         <div className={`points-from-last-race points-${pointsFromLastRace}`}>
             +{pointsFromLastRace}

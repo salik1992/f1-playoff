@@ -7,15 +7,18 @@ export const regularDrivers = (driver: Driver) => !driver.isInPlayOff;
 export const playoffDrivers = (driver: Driver) => driver.isInPlayOff;
 
 export const orderDrivers = (drivers: Driver[]) => sort<Driver>((driverA, driverB) => {
-    if (driverA.points !== driverB.points) return driverB.points - driverA.points;
+    const areBothInPlayoffs = driverA.isInPlayOff && driverB.isInPlayOff;
+    const points = areBothInPlayoffs ? 'playOffPoints' : 'points'
+    if (driverA[points] !== driverB[points]) return driverB[points] - driverA[points];
+    const finishesCount = areBothInPlayoffs ? 'playOffFinishesCount' : 'finishesCount'
     let finishesAtPlace = 1;
     while (
         finishesAtPlace <= drivers.length
-        && driverA.finishesCount[finishesAtPlace] === driverB.finishesCount[finishesAtPlace]
+        && driverA[finishesCount][finishesAtPlace] === driverB[finishesCount][finishesAtPlace]
     ) {
         finishesAtPlace += 1;
     }
-    return driverB.finishesCount[finishesAtPlace] - driverA.finishesCount[finishesAtPlace];
+    return driverB[finishesCount][finishesAtPlace] - driverA[finishesCount][finishesAtPlace];
 })(drivers);
 
 export const wait = async (time: number) => new Promise<void>((resolve) => {
@@ -52,6 +55,20 @@ export const processRegularSeasonDriver = ({
     driver.points += pointsForRace;
     driver.pointsFromLastRace = pointsForRace;
     if (result) {
-        driver.finishesCount[result] += 1;
+        if (!driver.finishesCount[result]) {
+            driver.finishesCount[result] = 1;
+        } else {
+            driver.finishesCount[result] += 1;
+        }
+    }
+    if (driver.isInPlayOff) {
+        driver.playOffPoints += pointsForRace;
+        if (result) {
+            if (!driver.playOffFinishesCount[result]) {
+                driver.playOffFinishesCount[result] = 1;
+            } else {
+                driver.playOffFinishesCount[result] += 1;
+            }
+        }
     }
 };

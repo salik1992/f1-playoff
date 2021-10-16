@@ -6,6 +6,7 @@ import { SeasonController } from '../controllers/interface';
 import { Driver } from '../data';
 import { PATHS } from '../data/paths';
 import { DriverView } from './Driver';
+import { DriversGroup } from './DriversGroup';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, H2 } from './Texts';
 
@@ -60,28 +61,33 @@ export const SeasonRunner = () => {
     return (
         <>
             <SeasonPicker />
+            <H1>Season - {season}</H1>
             <H1>Race {raceIndex + 1}: {raceState.race}</H1>
             {raceState.isPlayoffRunning && (
-                <div style={{ position: 'relative' }}>
-                    <H2>Playoff Group</H2>
+                <>
+                <H2>Playoff Group</H2>
+                <DriversGroup>
                     {map((driver: Driver) => (
                         <DriverView
                             key={driver.name}
                             offsetIndex={driver.position}
                             driver={driver}
+                            isInPlayoff
                         />
                     ))(raceState.playoffDrivers)}
-                </div>
+                </DriversGroup>
+                </>
             )}
-            <div style={{ position: 'relative' }}>
+            <DriversGroup offset={raceState.playoffDrivers.length}>
                 {map((driver: Driver) => (
                     <DriverView
                         key={driver.name}
-                        offsetIndex={driver.position - raceState.playoffDrivers.length}
+                        offsetIndex={driver.position}
                         driver={driver}
+                        playoffRunners={raceState.playoffDrivers.length}
                     />
                 ))(raceState.regularDrivers)}
-            </div>
+            </DriversGroup>
         </>
     )
 };

@@ -7,9 +7,9 @@ import { Controllers } from '../controllers';
 const SEASONS = reverse((Object.keys(PATHS)));
 
 const TEXTS = {
-    F1_CLASSIC: 'F1 Classic',
-    F1_PLAYOFF: 'F1 Play Off',
-    NASCAR_PLAYOFF: 'NASCAR Play Off',
+    [Controllers.F1_CLASSIC]: 'F1 Classic',
+    [Controllers.F1_PLAYOFF]: 'F1 Play Off',
+    [Controllers.NASCAR_PLAYOFF]: 'NASCAR Play Off',
 } as const;
 
 export const SeasonPicker = () => {
@@ -29,14 +29,14 @@ export const SeasonPicker = () => {
                 ))(SEASONS)}
             </select>
             <select
-                value={season}
-                onChange={(e) => setChampionshipStyle(e.target.value as unknown as Controllers)}
+                value={championshipStyle}
+                onChange={(e) => setChampionshipStyle(e.target.value as Controllers)}
             >
-                {map<keyof typeof TEXTS, JSX.Element>((controller) => (
+                {map<Controllers, JSX.Element>((controller) => (
                     <option key={`season-picker-${controller}`} value={controller}>
                         {TEXTS[controller]}
                     </option>
-                ))(Object.keys(TEXTS) as (keyof typeof TEXTS)[])}
+                ))(Object.keys(TEXTS) as Controllers[])}
             </select>
             <Link to={`/${season}/${championshipStyle}`}>
                 Run the season
