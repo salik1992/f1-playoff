@@ -24,6 +24,9 @@ const DriverWrap = styled.div`
 
     .name {
         flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .position, .points, .points-from-last-race {

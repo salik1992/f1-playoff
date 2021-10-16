@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { map } from '../../node_modules/@salik1992/fun-ts/dist/array';
 import { getController } from '../controllers';
 import { SeasonController } from '../controllers/interface';
@@ -30,6 +30,10 @@ export const SeasonRunner = () => {
         isPlayoffRunning: false,
     });
 
+    useEffect(() => () => {
+        controller?.destruct();
+    }, []);
+
     useEffect(() => {
         if (!controller) return;
         controller.init(season)
@@ -39,7 +43,7 @@ export const SeasonRunner = () => {
     }, [season, controller]);
 
     useEffect(() => {
-        if (!controller) return;
+        if (!controller || controller.destructed) return;
         setRaceState({
             race: controller.getRace(),
             regularDrivers: controller.getRegularDrivers(),
@@ -55,6 +59,7 @@ export const SeasonRunner = () => {
 
     return (
         <>
+            <Link to="/">&larr; Main Page</Link>
             <SeasonPicker />
             <H1>Season - {season}</H1>
             <H1>Race {raceIndex + 1}: {raceState.race}</H1>

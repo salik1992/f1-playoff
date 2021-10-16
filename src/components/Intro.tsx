@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
+import { Controllers } from '../controllers';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, H2, P, Ul, Li } from './Texts';
-
 
 export const Intro = () => (
     <>
@@ -21,6 +22,7 @@ export const Intro = () => (
             The main disadvantage would be unfair result if driver who dominated the main
             part of the season would loose because of two unlucky races.
         </P>
+        <SeasonPicker />
         <H2>Fictional F1 Play Off Rules</H2>
         <P>
             The begining of the season is same to the current F1 rules. But towards the
@@ -63,7 +65,11 @@ export const Intro = () => (
                     </Li>
                 </Ul>
             </Li>
+            <Li>
+                <Link to="/info/F1_PLAYOFF">See interesting facts</Link> or pick any season to run:
+            </Li>
         </Ul>
+        <SeasonPicker championshipStyle={Controllers.F1_PLAYOFF} />
         <H2>NASCAR like Play off rules</H2>
         <P>
             These are not exact as done in NASCAR, but close and they are more extreme.
@@ -83,7 +89,10 @@ export const Intro = () => (
             <Li>
                 Top 4 have 1 race that decides it all.
             </Li>
+            <Li>
+                <Link to="/info/NASCAR_PLAYOFF">See interesting facts</Link> or pick any season to run:
+            </Li>
         </Ul>
-        <SeasonPicker />
+        <SeasonPicker championshipStyle={Controllers.NASCAR_PLAYOFF} />
     </>
 );

@@ -26,14 +26,23 @@ const Wrapper = styled.div`
     }
 `;
 
-export const SeasonPicker = () => {
+type Props = {
+    season?: keyof typeof PATHS,
+    championshipStyle?: Controllers,
+}
+
+export const SeasonPicker = ({
+    season: propsSeason, championshipStyle: propsChampionshipStyle,
+}: Props) => {
     const {
         season: initialSeason,
         championshipStyle: initialChampionshipStyle,
     } = useParams<Params>();
 
-    const [season, setSeason] = useState(initialSeason)
-    const [championshipStyle, setChampionshipStyle] = useState(initialChampionshipStyle);
+    const [season, setSeason] = useState(propsSeason || initialSeason || SEASONS[0])
+    const [championshipStyle, setChampionshipStyle] = useState(
+        propsChampionshipStyle || initialChampionshipStyle || Controllers.F1_CLASSIC
+    );
 
     return (
         <Wrapper>

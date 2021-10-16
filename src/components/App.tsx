@@ -4,6 +4,8 @@ import {
     Switch,
 } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
+import { InfoF1Playoff } from './InfoF1Playoff';
+import { InfoNascarPlayoff } from './InfoNascarPlayoff';
 import { Intro } from './Intro';
 import { SeasonRunner } from './SeasonRunner';
 
@@ -25,6 +27,8 @@ export const App = () => {
             <Styles />
             <BrowserRouter>
                 <Switch>
+                    <Route path="/info/F1_PLAYOFF" component={InfoF1Playoff} />
+                    <Route path="/info/NASCAR_PLAYOFF" component={InfoNascarPlayoff} />
                     <Route path="/:season/:championshipStyle" component={SeasonRunner} />
                     <Route path="/" component={Intro} />
                 </Switch>
