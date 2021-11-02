@@ -14,7 +14,7 @@ const FooterWrap = styled.div`
     margin-top: 20px;
     color: #ffffff;
     background-color: #222222;
-    background-image: linear-gradient(to top, #333333, #111111);
+    background-image: linear-gradient(to bottom, #333333, #111111);
     border-top: 1px solid #000000;
     box-shadow: 0 0 5px 0 #222222;
     overflow: hidden;
