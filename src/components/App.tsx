@@ -29,7 +29,7 @@ const Styles = createGlobalStyle`
 
 export const App = () => {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/f1-playoff">
             <Header />
             <Wrap>
                 <Styles />
