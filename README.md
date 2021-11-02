@@ -10,5 +10,5 @@ Created with create-react-app in typescript.
 - to deploy `npm run deploy`
 
 ## License
-Code and input data (csv files with results): MIT license
-Calculated results and interesting facts: CC BY 4.0
+- Code and input data (csv files with results): MIT license
+- Calculated results and interesting facts: CC BY 4.0
