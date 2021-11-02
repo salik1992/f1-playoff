@@ -18,8 +18,8 @@ export const Intro = () => (
         <P>
             The goal of this exercise is to discover and show what implications it might
             have on the known scenarios. There are some pros and cons to this approach.
-            The main advantage might be nearly guaranteed fight to the last race.
-            The main disadvantage would be unfair result if driver who dominated the main
+            The main advantage might be a nearly guaranteed fight to the last race.
+            The main disadvantage would be an unfair result if the driver who dominated the main
             part of the season would loose because of two unlucky races.
         </P>
         <SeasonPicker />
@@ -30,7 +30,7 @@ export const Intro = () => (
         </P>
         <Ul>
             <Li>
-                7 races before the end of the season top 8 drivers are promoted to the
+                7 races before the end of the season the top 8 drivers are promoted to the
                 play off stage. The rest of the field continues fighting for positions
                 but cannot reach the play off and thus championship win anymore.
             </Li>
@@ -44,7 +44,7 @@ export const Intro = () => (
                 play off group are eliminated and join back the rest of the field.
             </Li>
             <Li>
-                The remaining top 6 has the points reset again and they start from 0.
+                The remaining top 6 have the points reset again and they start from 0.
             </Li>
             <Li>
                 After 2 more races (3 races to the end) 5th and 6th placed drivers
