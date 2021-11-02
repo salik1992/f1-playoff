@@ -59,7 +59,6 @@ export const SeasonRunner = () => {
 
     return (
         <>
-            <Link to="/">&larr; Main Page</Link>
             <SeasonPicker />
             <H1>Season - {season}</H1>
             <H1>Race {raceIndex + 1}: {raceState.race}</H1>
