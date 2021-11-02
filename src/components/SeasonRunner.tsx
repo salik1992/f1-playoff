@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { map } from '../../node_modules/@salik1992/fun-ts/dist/array';
 import { getController } from '../controllers';
 import { SeasonController } from '../controllers/interface';
@@ -16,6 +17,10 @@ type RaceState = {
     playoffDrivers: Driver[],
     isPlayoffRunning: boolean,
 };
+
+const ResultsWrap = styled.div<{ driversLength: number }>`
+    height: ${({ driversLength }) => driversLength * 50 + 100}px;
+`;
 
 export const SeasonRunner = () => {
     const { season, championshipStyle } = useParams<Params>();
@@ -62,31 +67,37 @@ export const SeasonRunner = () => {
             <SeasonPicker />
             <H1>Season - {season}</H1>
             <H1>Race {raceIndex + 1}: {raceState.race}</H1>
-            {raceState.isPlayoffRunning && (
-                <>
-                <H2>Playoff Group</H2>
-                <DriversGroup>
+            <ResultsWrap
+                driversLength={(
+                    raceState.playoffDrivers.length + raceState.regularDrivers.length
+                )}
+            >
+                {raceState.isPlayoffRunning && (
+                    <>
+                        <H2>Playoff Group</H2>
+                        <DriversGroup>
+                            {map((driver: Driver) => (
+                                <DriverView
+                                    key={driver.name}
+                                    offsetIndex={driver.position}
+                                    driver={driver}
+                                    isInPlayoff
+                                />
+                            ))(raceState.playoffDrivers)}
+                        </DriversGroup>
+                    </>
+                )}
+                <DriversGroup offset={raceState.playoffDrivers.length}>
                     {map((driver: Driver) => (
                         <DriverView
                             key={driver.name}
                             offsetIndex={driver.position}
                             driver={driver}
-                            isInPlayoff
+                            playoffRunners={raceState.playoffDrivers.length}
                         />
-                    ))(raceState.playoffDrivers)}
+                    ))(raceState.regularDrivers)}
                 </DriversGroup>
-                </>
-            )}
-            <DriversGroup offset={raceState.playoffDrivers.length}>
-                {map((driver: Driver) => (
-                    <DriverView
-                        key={driver.name}
-                        offsetIndex={driver.position}
-                        driver={driver}
-                        playoffRunners={raceState.playoffDrivers.length}
-                    />
-                ))(raceState.regularDrivers)}
-            </DriversGroup>
+            </ResultsWrap>
         </>
     )
 };
