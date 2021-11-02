@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const HEIGHT = 50;
 
 const FooterWrap = styled.div`
+    position: fixed;
+    bottom: 0;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
