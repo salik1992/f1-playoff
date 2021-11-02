@@ -1,5 +1,5 @@
 import {
-    BrowserRouter,
+    HashRouter,
     Route,
     Switch,
 } from 'react-router-dom';
@@ -25,11 +25,14 @@ const Styles = createGlobalStyle`
         margin: 0;
         padding: 0;
     }
+    #root {
+        margin-bottom: 70px;
+    }
 `
 
 export const App = () => {
     return (
-        <BrowserRouter basename="/f1-playoff">
+        <HashRouter>
             <Header />
             <Wrap>
                 <Styles />
@@ -41,6 +44,6 @@ export const App = () => {
                     </Switch>
             </Wrap>
             <Footer />
-        </BrowserRouter>
+        </HashRouter>
     );
 };
