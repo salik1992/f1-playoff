@@ -25,6 +25,7 @@ export abstract class SeasonControllerPlayoffBase extends SeasonControllerBase {
         if (this.destructed) return;
         this.advanceRace();
     }
+
     private advancePlayoffs() {
         if (this.playoffStage + 1 === this.playoffStages.length) return;
         const currentPlayofStage = this.playoffStages[this.playoffStage + 1];
