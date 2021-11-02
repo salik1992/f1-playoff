@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { map } from '../../node_modules/@salik1992/fun-ts/dist/array';
 import { getController } from '../controllers';
