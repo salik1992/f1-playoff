@@ -27,7 +27,7 @@ const HeaderWrap = styled.div`
 export const Header = () => (
     <HeaderWrap>
         <Link to="/">
-            What if F1 used play-off scoring system
+            What if F1 used a play-off scoring system
         </Link>
     </HeaderWrap>
 );
