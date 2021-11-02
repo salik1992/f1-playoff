@@ -40,9 +40,10 @@ export const getRegularDrivers = compose(positionDrivers, filter(regularDrivers)
 export const getPlayOffDrivers = compose(positionDrivers, filter(playoffDrivers));
 
 export const processRegularSeasonDriver = ({
-    awardedPoints, pointsMultiplier, raceIndex,
+    awardedPoints, fastestLapPoints, pointsMultiplier, raceIndex,
 }: {
     awardedPoints: Record<number, number>,
+    fastestLapPoints: string[],
     pointsMultiplier: 1 | 0.5,
     raceIndex: number,
 }) => (driver: Driver) => {
@@ -51,7 +52,11 @@ export const processRegularSeasonDriver = ({
         result !== null
             ? (awardedPoints[result] ?? 0) * pointsMultiplier
             : 0
-    )
+    ) + (
+        driver.name === fastestLapPoints[raceIndex]
+            ? 1
+            : 0
+    );
     driver.points += pointsForRace;
     driver.pointsFromLastRace = pointsForRace;
     if (result) {
