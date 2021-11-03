@@ -14,7 +14,8 @@ import { SeasonRunner } from './SeasonRunner';
 const Wrap = styled.div`
     margin: auto;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1240px;
+    margin-bottom: 200px;
 `;
 
 const Styles = createGlobalStyle`
