@@ -1,4 +1,4 @@
-import * as ROA from 'fp-ts/ReadonlyArray';
+import { filter } from 'fp-ts/ReadonlyArray';
 import { SeasonControllerBase } from './SeasonControllerBase';
 import { wait } from './utils';
 import { RACE_LENGTH } from './constants';
@@ -10,7 +10,7 @@ export type PlayoffStage = Readonly<{
 }>;
 
 const remainingSprintRaces = (races: readonly string[]) =>
-    ROA.filter((race: string) => race.startsWith('SPRINT'))(races).length;
+    filter((race: string) => race.startsWith('SPRINT'))(races).length;
 
 export abstract class SeasonControllerPlayoffBase extends SeasonControllerBase {
     playoffStage = -1;

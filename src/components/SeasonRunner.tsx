@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import * as ROA from 'fp-ts/lib/ReadonlyArray';
+import { map } from 'fp-ts/ReadonlyArray';
 import { getController } from '../controllers';
 import { SeasonController } from '../controllers/interface';
 import { Driver } from '../data';
@@ -78,7 +78,7 @@ export const SeasonRunner = () => {
                     <>
                         <H2>Playoff Group</H2>
                         <DriversGroup>
-                            {ROA.map((driver: Driver) => (
+                            {map((driver: Driver) => (
                                 <DriverView
                                     key={driver.name}
                                     offsetIndex={driver.position}
@@ -90,7 +90,7 @@ export const SeasonRunner = () => {
                     </>
                 )}
                 <DriversGroup offset={raceState.playoffDrivers.length}>
-                    {ROA.map((driver: Driver) => (
+                    {map((driver: Driver) => (
                         <DriverView
                             key={driver.name}
                             offsetIndex={driver.position}

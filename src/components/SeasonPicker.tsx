@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
-import * as A from 'fp-ts/Array';
+import { map, reverse } from 'fp-ts/Array';
 import { PATHS } from '../data/paths';
 import { Controllers } from '../controllers';
 import { Params } from './types';
 
-const SEASONS = A.reverse(Object.keys(PATHS));
+const SEASONS = reverse(Object.keys(PATHS));
 
 const TEXTS = {
-    [Controllers.F1_CLASSIC]: 'F1 Classic',
-    [Controllers.F1_PLAYOFF]: 'F1 Play Off',
-    [Controllers.NASCAR_PLAYOFF]: 'NASCAR Play Off',
+    F1_CLASSIC: 'F1 Classic',
+    F1_PLAYOFF: 'F1 Play Off',
+    NASCAR_PLAYOFF: 'NASCAR Play Off',
 } as const;
 
 const Wrapper = styled.div`
@@ -40,7 +40,7 @@ export const SeasonPicker = ({
 
     const [season, setSeason] = useState(propsSeason || initialSeason || SEASONS[0]);
     const [championshipStyle, setChampionshipStyle] = useState(
-        propsChampionshipStyle || initialChampionshipStyle || Controllers.F1_CLASSIC,
+        propsChampionshipStyle || initialChampionshipStyle || 'F1_CLASSIC',
     );
 
     return (
@@ -48,7 +48,7 @@ export const SeasonPicker = ({
             <select
                 value={season}
                 onChange={(e) => setSeason(e.target.value as keyof typeof PATHS)}>
-                {A.map<string, JSX.Element>((season) => (
+                {map<string, JSX.Element>((season) => (
                     <option key={`season-picker-${season}`} value={season}>
                         {season}
                     </option>
@@ -57,7 +57,7 @@ export const SeasonPicker = ({
             <select
                 value={championshipStyle}
                 onChange={(e) => setChampionshipStyle(e.target.value as Controllers)}>
-                {A.map<Controllers, JSX.Element>((controller) => (
+                {map<Controllers, JSX.Element>((controller) => (
                     <option key={`season-picker-${controller}`} value={controller}>
                         {TEXTS[controller]}
                     </option>

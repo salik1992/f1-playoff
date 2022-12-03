@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Controllers } from '../controllers';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, P, Ul, Li } from './Texts';
 
@@ -41,6 +40,6 @@ export const InfoNascarPlayoff = () => (
             </Li>
             <Li>Nico Rosberg would win the championship in 2015 instead of 2016.</Li>
         </Ul>
-        <SeasonPicker championshipStyle={Controllers.NASCAR_PLAYOFF} />
+        <SeasonPicker championshipStyle="NASCAR_PLAYOFF" />
     </>
 );

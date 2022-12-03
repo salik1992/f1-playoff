@@ -1,5 +1,5 @@
-import * as ROA from 'fp-ts/lib/ReadonlyArray';
-import * as f from 'fp-ts/lib/function';
+import { filter } from 'fp-ts/ReadonlyArray';
+import { flow } from 'fp-ts/function';
 import { Driver } from '../data';
 
 export const regularDrivers = (driver: Driver) => !driver.isInPlayOff;
@@ -37,9 +37,9 @@ export const positionDrivers = (drivers: readonly Driver[]) => {
     return drivers;
 };
 
-export const getRegularDrivers = f.flow(ROA.filter(regularDrivers), positionDrivers);
+export const getRegularDrivers = flow(filter(regularDrivers), positionDrivers);
 
-export const getPlayOffDrivers = f.flow(ROA.filter(playoffDrivers), positionDrivers);
+export const getPlayOffDrivers = flow(filter(playoffDrivers), positionDrivers);
 
 export const processRegularSeasonDriver =
     ({

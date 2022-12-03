@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Controllers } from '../controllers';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, H2, P, Ul, Li } from './Texts';
 
@@ -60,7 +59,7 @@ export const Intro = () => (
                 <Link to="/info/F1_PLAYOFF">See interesting facts</Link> or pick any season to run:
             </Li>
         </Ul>
-        <SeasonPicker championshipStyle={Controllers.F1_PLAYOFF} />
+        <SeasonPicker championshipStyle="F1_PLAYOFF" />
         <H2>NASCAR like Play off rules</H2>
         <P>These are not exact as done in NASCAR, but close and they are more extreme.</P>
         <Ul>
@@ -79,6 +78,6 @@ export const Intro = () => (
                 run:
             </Li>
         </Ul>
-        <SeasonPicker championshipStyle={Controllers.NASCAR_PLAYOFF} />
+        <SeasonPicker championshipStyle="NASCAR_PLAYOFF" />
     </>
 );

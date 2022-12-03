@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Controllers } from '../controllers';
 import { SeasonPicker } from './SeasonPicker';
 import { H1, P, Ul, Li } from './Texts';
 
@@ -34,6 +33,6 @@ export const InfoF1Playoff = () => (
             <Li>There would be a new champion in 2017, Valtteri Bottas.</Li>
             <Li>Lewis Hamilton would win the championship in 2021.</Li>
         </Ul>
-        <SeasonPicker championshipStyle={Controllers.F1_PLAYOFF} />
+        <SeasonPicker championshipStyle="F1_PLAYOFF" />
     </>
 );

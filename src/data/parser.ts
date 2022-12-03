@@ -1,20 +1,20 @@
-import * as f from 'fp-ts/lib/function';
-import * as ROA from 'fp-ts/lib/ReadonlyArray';
-import * as s from 'fp-ts/lib/string';
+import { flow } from 'fp-ts/function';
+import { filter, filterWithIndex, map, reduceWithIndex } from 'fp-ts/ReadonlyArray';
+import { split } from 'fp-ts/string';
 import { Season, Driver } from './types';
 
-const getValues = f.flow(
-    s.split(','),
-    ROA.filterWithIndex((index) => index > 0),
+const getValues = flow(
+    split(','),
+    filterWithIndex((index) => index > 0),
 );
 
-const getResults = f.flow(
-    ROA.map((n: string) => parseInt(n, 10)),
-    ROA.map((result) => (Number.isNaN(result) ? null : result)),
+const getResults = flow(
+    map((n: string) => parseInt(n, 10)),
+    map((result) => (Number.isNaN(result) ? null : result)),
 );
 
-const driverLineToDriver = f.flow(
-    s.split(','),
+const driverLineToDriver = flow(
+    split(','),
     ([name, ...results]) =>
         ({
             name,
@@ -29,27 +29,27 @@ const driverLineToDriver = f.flow(
         } as Driver),
 );
 
-const parseCsvBlocks = f.flow(
-    s.split('\n'),
-    ROA.filter((line) => line.length > 0 && !/^,+$/.test(line)),
+const parseCsvBlocks = flow(
+    split('\n'),
+    filter((line) => line.length > 0 && !/^,+$/.test(line)),
 );
 
-const parsePoints = f.flow(
+const parsePoints = flow(
     getValues,
-    ROA.map((n: string) => parseInt(n, 10)),
-    ROA.map((points) => (Number.isNaN(points) ? 0 : points)),
-    ROA.reduceWithIndex({} as Record<number, number>, (index, acc, points) => ({
+    map((n: string) => parseInt(n, 10)),
+    map((points) => (Number.isNaN(points) ? 0 : points)),
+    reduceWithIndex({} as Record<number, number>, (index, acc, points) => ({
         ...acc,
         [index + 1]: points,
     })),
 );
 
-const parseHalfPoints = f.flow(
+const parseHalfPoints = flow(
     getValues,
-    ROA.map((text: string) => text === 'YES'),
+    map((text: string) => text === 'YES'),
 );
 
-export const parseSeason = f.flow(
+export const parseSeason = flow(
     parseCsvBlocks,
     ([
         yearLine,
@@ -67,6 +67,6 @@ export const parseSeason = f.flow(
             races: getValues(racesLine),
             halfPoints: parseHalfPoints(halfPointsLine),
             fastestLapPoints: getValues(fastestLapPointLine),
-            drivers: ROA.map(driverLineToDriver)(driversLines),
+            drivers: map(driverLineToDriver)(driversLines),
         } as Season),
 );
