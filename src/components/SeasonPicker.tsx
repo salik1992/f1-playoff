@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
-import { map, reverse } from '@salik1992/fun-ts/dist/array';
+import * as A from 'fp-ts/Array';
 import { PATHS } from '../data/paths';
 import { Controllers } from '../controllers';
 import { Params } from './types';
 
-const SEASONS = reverse((Object.keys(PATHS)));
+const SEASONS = A.reverse(Object.keys(PATHS));
 
 const TEXTS = {
     [Controllers.F1_CLASSIC]: 'F1 Classic',
@@ -27,30 +27,28 @@ const Wrapper = styled.div`
 `;
 
 type Props = {
-    season?: keyof typeof PATHS,
-    championshipStyle?: Controllers,
-}
+    season?: keyof typeof PATHS;
+    championshipStyle?: Controllers;
+};
 
 export const SeasonPicker = ({
-    season: propsSeason, championshipStyle: propsChampionshipStyle,
+    season: propsSeason,
+    championshipStyle: propsChampionshipStyle,
 }: Props) => {
-    const {
-        season: initialSeason,
-        championshipStyle: initialChampionshipStyle,
-    } = useParams<Params>();
+    const { season: initialSeason, championshipStyle: initialChampionshipStyle } =
+        useParams<Params>();
 
-    const [season, setSeason] = useState(propsSeason || initialSeason || SEASONS[0])
+    const [season, setSeason] = useState(propsSeason || initialSeason || SEASONS[0]);
     const [championshipStyle, setChampionshipStyle] = useState(
-        propsChampionshipStyle || initialChampionshipStyle || Controllers.F1_CLASSIC
+        propsChampionshipStyle || initialChampionshipStyle || Controllers.F1_CLASSIC,
     );
 
     return (
         <Wrapper>
             <select
                 value={season}
-                onChange={(e) => setSeason(e.target.value as keyof typeof PATHS)}
-            >
-                {map<string, JSX.Element>((season) => (
+                onChange={(e) => setSeason(e.target.value as keyof typeof PATHS)}>
+                {A.map<string, JSX.Element>((season) => (
                     <option key={`season-picker-${season}`} value={season}>
                         {season}
                     </option>
@@ -58,18 +56,15 @@ export const SeasonPicker = ({
             </select>
             <select
                 value={championshipStyle}
-                onChange={(e) => setChampionshipStyle(e.target.value as Controllers)}
-            >
-                {map<Controllers, JSX.Element>((controller) => (
+                onChange={(e) => setChampionshipStyle(e.target.value as Controllers)}>
+                {A.map<Controllers, JSX.Element>((controller) => (
                     <option key={`season-picker-${controller}`} value={controller}>
                         {TEXTS[controller]}
                     </option>
                 ))(Object.keys(TEXTS) as Controllers[])}
             </select>
             <br />
-            <Link to={`/${season}/${championshipStyle}`}>
-                Run the season
-            </Link>
+            <Link to={`/${season}/${championshipStyle}`}>Run the season</Link>
         </Wrapper>
-    )
+    );
 };

@@ -1,21 +1,18 @@
-
 import { SeasonControllerPlayoffBase } from './SeasonControllerPlayoffBase';
 
-const PLAYOFF_1 = <const>{
+const PLAYOFF_1 = {
     at: 7,
     cutoff: 12,
-};
-const PLAYOFF_2 = <const>{
+} as const;
+const PLAYOFF_2 = {
     at: 4,
     cutoff: 8,
-};
-const PLAYOFF_3 = <const>{
+} as const;
+const PLAYOFF_3 = {
     at: 1,
     cutoff: 4,
-};
+} as const;
 
 export class NascarPlayOff extends SeasonControllerPlayoffBase {
-    playoffStages = [PLAYOFF_1, PLAYOFF_2, PLAYOFF_3]
+    playoffStages = [PLAYOFF_1, PLAYOFF_2, PLAYOFF_3];
 }
-
-

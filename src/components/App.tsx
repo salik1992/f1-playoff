@@ -1,8 +1,4 @@
-import {
-    HashRouter,
-    Route,
-    Switch,
-} from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Footer } from './Footer';
 import { Header } from './Header';
@@ -29,7 +25,7 @@ const Styles = createGlobalStyle`
     #root {
         margin-bottom: 70px;
     }
-`
+`;
 
 export const App = () => {
     return (
@@ -37,12 +33,12 @@ export const App = () => {
             <Header />
             <Wrap>
                 <Styles />
-                    <Switch>
-                        <Route path="/info/F1_PLAYOFF" component={InfoF1Playoff} />
-                        <Route path="/info/NASCAR_PLAYOFF" component={InfoNascarPlayoff} />
-                        <Route path="/:season/:championshipStyle" component={SeasonRunner} />
-                        <Route path="/" component={Intro} />
-                    </Switch>
+                <Routes>
+                    <Route path="/info/F1_PLAYOFF" element={<InfoF1Playoff />} />
+                    <Route path="/info/NASCAR_PLAYOFF" element={<InfoNascarPlayoff />} />
+                    <Route path="/:season/:championshipStyle" element={<SeasonRunner />} />
+                    <Route path="/" element={<Intro />} />
+                </Routes>
             </Wrap>
             <Footer />
         </HashRouter>

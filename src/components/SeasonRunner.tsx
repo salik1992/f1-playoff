@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { map } from '../../node_modules/@salik1992/fun-ts/dist/array';
+import * as ROA from 'fp-ts/lib/ReadonlyArray';
 import { getController } from '../controllers';
 import { SeasonController } from '../controllers/interface';
 import { Driver } from '../data';
@@ -12,10 +12,10 @@ import { H1, H2 } from './Texts';
 import { Params } from './types';
 
 type RaceState = {
-    race: string,
-    regularDrivers: Driver[],
-    playoffDrivers: Driver[],
-    isPlayoffRunning: boolean,
+    race: string;
+    regularDrivers: readonly Driver[];
+    playoffDrivers: readonly Driver[];
+    isPlayoffRunning: boolean;
 };
 
 const ResultsWrap = styled.div<{ driversLength: number }>`
@@ -35,16 +35,19 @@ export const SeasonRunner = () => {
         isPlayoffRunning: false,
     });
 
-    useEffect(() => () => {
-        controller?.destruct();
-    }, []);
+    useEffect(
+        () => () => {
+            controller?.destruct();
+        },
+        [controller],
+    );
 
     useEffect(() => {
         if (!controller) return;
-        controller.init(season)
+        controller.init(season!);
         controller.setters = {
             setRaceIndex,
-        }
+        };
     }, [season, controller]);
 
     useEffect(() => {
@@ -55,28 +58,27 @@ export const SeasonRunner = () => {
             playoffDrivers: controller.getPlayOffDrivers(),
             isPlayoffRunning: controller.isPlayOffRunning(),
         });
-    }, [raceIndex])
+    }, [raceIndex]);
 
     useEffect(() => {
         controller?.destruct();
-        setController(getController(championshipStyle))
+        setController(getController(championshipStyle!));
     }, [season, championshipStyle]);
 
     return (
         <>
             <SeasonPicker />
             <H1>Season - {season}</H1>
-            <H1>Race {raceIndex + 1}: {raceState.race}</H1>
+            <H1>
+                Race {raceIndex + 1}: {raceState.race}
+            </H1>
             <ResultsWrap
-                driversLength={(
-                    raceState.playoffDrivers.length + raceState.regularDrivers.length
-                )}
-            >
+                driversLength={raceState.playoffDrivers.length + raceState.regularDrivers.length}>
                 {raceState.isPlayoffRunning && (
                     <>
                         <H2>Playoff Group</H2>
                         <DriversGroup>
-                            {map((driver: Driver) => (
+                            {ROA.map((driver: Driver) => (
                                 <DriverView
                                     key={driver.name}
                                     offsetIndex={driver.position}
@@ -88,7 +90,7 @@ export const SeasonRunner = () => {
                     </>
                 )}
                 <DriversGroup offset={raceState.playoffDrivers.length}>
-                    {map((driver: Driver) => (
+                    {ROA.map((driver: Driver) => (
                         <DriverView
                             key={driver.name}
                             offsetIndex={driver.position}
@@ -99,5 +101,5 @@ export const SeasonRunner = () => {
                 </DriversGroup>
             </ResultsWrap>
         </>
-    )
+    );
 };

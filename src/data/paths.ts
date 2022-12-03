@@ -31,7 +31,7 @@ import s2018 from './seasons/2018.csv';
 import s2019 from './seasons/2019.csv';
 import s2020 from './seasons/2020.csv';
 
-export const PATHS = <const>{
+export const PATHS = {
     '1991': s1991,
     '1992': s1992,
     '1993': s1993,
@@ -62,4 +62,4 @@ export const PATHS = <const>{
     '2018': s2018,
     '2019': s2019,
     '2020': s2020,
-};
+} as const;

@@ -1,5 +1,4 @@
-import { forEach } from '@salik1992/fun-ts/dist/array';
-import { Driver, loadSeason, PATHS, Season } from '../data';
+import { loadSeason, PATHS, Season } from '../data';
 import { SeasonController } from './interface';
 import { getPlayOffDrivers, getRegularDrivers, processRegularSeasonDriver } from './utils';
 
@@ -25,7 +24,7 @@ export abstract class SeasonControllerBase implements SeasonController {
     }
 
     getRace() {
-        return this.season!.races[this.currentRace]
+        return this.season!.races[this.currentRace];
     }
 
     getRegularDrivers() {
@@ -43,12 +42,14 @@ export abstract class SeasonControllerBase implements SeasonController {
     addPoints() {
         const { halfPoints, drivers, awardedPoints, fastestLapPoints } = this.season!;
         const pointsMultiplier = halfPoints[this.currentRace] ? 0.5 : 1;
-        forEach<Driver>(processRegularSeasonDriver({
-            awardedPoints,
-            fastestLapPoints,
-            pointsMultiplier,
-            raceIndex: this.currentRace,
-        }))(drivers)
+        drivers.forEach(
+            processRegularSeasonDriver({
+                awardedPoints,
+                fastestLapPoints,
+                pointsMultiplier,
+                raceIndex: this.currentRace,
+            }),
+        );
     }
 
     advanceRace() {
