@@ -13,20 +13,21 @@ const getResults = f.flow(
     ROA.map((result) => (Number.isNaN(result) ? null : result)),
 );
 
-const driverLineToDriver = (line: string): Driver => {
-    const [name, ...results] = s.split(',')(line);
-    return {
-        name,
-        results: getResults(results),
-        finishesCount: {},
-        position: 0,
-        points: 0,
-        pointsFromLastRace: 0,
-        isInPlayOff: false,
-        playOffPoints: 0,
-        playOffFinishesCount: {},
-    };
-};
+const driverLineToDriver = f.flow(
+    s.split(','),
+    ([name, ...results]) =>
+        ({
+            name,
+            results: getResults(results),
+            finishesCount: {},
+            position: 0,
+            points: 0,
+            pointsFromLastRace: 0,
+            isInPlayOff: false,
+            playOffPoints: 0,
+            playOffFinishesCount: {},
+        } as Driver),
+);
 
 const parseCsvBlocks = f.flow(
     s.split('\n'),
@@ -37,6 +38,10 @@ const parsePoints = f.flow(
     getValues,
     ROA.map((n: string) => parseInt(n, 10)),
     ROA.map((points) => (Number.isNaN(points) ? 0 : points)),
+    ROA.reduceWithIndex({} as Record<number, number>, (index, acc, points) => ({
+        ...acc,
+        [index + 1]: points,
+    })),
 );
 
 const parseHalfPoints = f.flow(
@@ -44,8 +49,9 @@ const parseHalfPoints = f.flow(
     ROA.map((text: string) => text === 'YES'),
 );
 
-export const parseSeason = (csv: string): Season => {
-    const [
+export const parseSeason = f.flow(
+    parseCsvBlocks,
+    ([
         yearLine,
         pointsLine,
         sprintPointsLine,
@@ -53,29 +59,14 @@ export const parseSeason = (csv: string): Season => {
         halfPointsLine,
         fastestLapPointLine,
         ...driversLines
-    ] = parseCsvBlocks(csv);
-    const year = parseInt(getValues(yearLine)[0], 10);
-    const awardedPoints: Record<number, number> = {};
-    const awardedSprintPoints: Record<number, number> = {};
-    const points = parsePoints(pointsLine);
-    const sprintPoints = parsePoints(sprintPointsLine);
-    points.forEach((points, index) => {
-        awardedPoints[index + 1] = points;
-    });
-    sprintPoints.forEach((points, index) => {
-        awardedSprintPoints[index + 1] = points;
-    });
-    const races = getValues(racesLine);
-    const halfPoints = parseHalfPoints(halfPointsLine);
-    const fastestLapPoints = getValues(fastestLapPointLine);
-    const drivers = ROA.map(driverLineToDriver)(driversLines);
-    return {
-        year,
-        awardedPoints,
-        awardedSprintPoints,
-        drivers,
-        races,
-        halfPoints,
-        fastestLapPoints,
-    };
-};
+    ]) =>
+        ({
+            year: parseInt(getValues(yearLine)[0]),
+            awardedPoints: parsePoints(pointsLine),
+            awardedSprintPoints: parsePoints(sprintPointsLine),
+            races: getValues(racesLine),
+            halfPoints: parseHalfPoints(halfPointsLine),
+            fastestLapPoints: getValues(fastestLapPointLine),
+            drivers: ROA.map(driverLineToDriver)(driversLines),
+        } as Season),
+);
