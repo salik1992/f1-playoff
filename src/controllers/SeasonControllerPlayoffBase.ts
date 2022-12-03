@@ -1,3 +1,4 @@
+import * as ROA from 'fp-ts/ReadonlyArray';
 import { SeasonControllerBase } from './SeasonControllerBase';
 import { wait } from './utils';
 import { RACE_LENGTH } from './constants';
@@ -7,6 +8,9 @@ export type PlayoffStage = Readonly<{
     at: number;
     cutoff: number;
 }>;
+
+const remainingSprintRaces = (races: readonly string[]) =>
+    ROA.filter((race: string) => race.startsWith('SPRINT'))(races).length;
 
 export abstract class SeasonControllerPlayoffBase extends SeasonControllerBase {
     playoffStage = -1;
@@ -29,7 +33,9 @@ export abstract class SeasonControllerPlayoffBase extends SeasonControllerBase {
         if (this.playoffStage + 1 === this.playoffStages.length) return;
         const currentPlayofStage = this.playoffStages[this.playoffStage + 1];
         const isAtPlayoffStageStart =
-            this.currentRace + currentPlayofStage.at === this.season!.races.length;
+            this.currentRace + currentPlayofStage.at ===
+            this.season!.races.length -
+                remainingSprintRaces(this.season?.races.slice(this.currentRace) ?? []);
         if (isAtPlayoffStageStart) {
             this.playoffStage += 1;
             this.advanceDriversToPlayoff(currentPlayofStage.cutoff);

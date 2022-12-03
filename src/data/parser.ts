@@ -30,7 +30,7 @@ const driverLineToDriver = (line: string): Driver => {
 
 const parseCsvBlocks = f.flow(
     s.split('\n'),
-    ROA.filterWithIndex((index) => index !== 5),
+    ROA.filter((line) => line.length > 0 && !/^,+$/.test(line)),
 );
 
 const parsePoints = f.flow(
@@ -45,13 +45,25 @@ const parseHalfPoints = f.flow(
 );
 
 export const parseSeason = (csv: string): Season => {
-    const [yearLine, pointsLine, racesLine, halfPointsLine, fastestLapPointLine, ...driversLines] =
-        parseCsvBlocks(csv);
+    const [
+        yearLine,
+        pointsLine,
+        sprintPointsLine,
+        racesLine,
+        halfPointsLine,
+        fastestLapPointLine,
+        ...driversLines
+    ] = parseCsvBlocks(csv);
     const year = parseInt(getValues(yearLine)[0], 10);
     const awardedPoints: Record<number, number> = {};
+    const awardedSprintPoints: Record<number, number> = {};
     const points = parsePoints(pointsLine);
+    const sprintPoints = parsePoints(sprintPointsLine);
     points.forEach((points, index) => {
         awardedPoints[index + 1] = points;
+    });
+    sprintPoints.forEach((points, index) => {
+        awardedSprintPoints[index + 1] = points;
     });
     const races = getValues(racesLine);
     const halfPoints = parseHalfPoints(halfPointsLine);
@@ -60,6 +72,7 @@ export const parseSeason = (csv: string): Season => {
     return {
         year,
         awardedPoints,
+        awardedSprintPoints,
         drivers,
         races,
         halfPoints,

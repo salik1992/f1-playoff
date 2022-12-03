@@ -15,6 +15,7 @@ export type Season = {
     races: readonly string[];
     drivers: readonly Driver[];
     awardedPoints: Record<number, number>;
+    awardedSprintPoints: Record<number, number>;
     halfPoints: readonly boolean[];
     fastestLapPoints: readonly string[];
 };

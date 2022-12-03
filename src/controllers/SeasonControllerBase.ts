@@ -40,11 +40,13 @@ export abstract class SeasonControllerBase implements SeasonController {
     }
 
     addPoints() {
-        const { halfPoints, drivers, awardedPoints, fastestLapPoints } = this.season!;
+        const { halfPoints, drivers, awardedPoints, awardedSprintPoints, fastestLapPoints } =
+            this.season!;
         const pointsMultiplier = halfPoints[this.currentRace] ? 0.5 : 1;
+        const isSprint = this.season?.races[this.currentRace].startsWith('SPRINT');
         drivers.forEach(
             processRegularSeasonDriver({
-                awardedPoints,
+                awardedPoints: isSprint ? awardedSprintPoints : awardedPoints,
                 fastestLapPoints,
                 pointsMultiplier,
                 raceIndex: this.currentRace,
