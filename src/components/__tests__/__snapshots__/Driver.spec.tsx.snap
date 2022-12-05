@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Driver should render driver 1`] = `"<div><div style=\\"transform: translateY(0px);\\" class=\\"sc-bcXHqe hvrhnk\\"><div class=\\"position\\">1</div><div class=\\"name\\">Test DRIVER</div><div class=\\"points\\">20</div><div class=\\"points-from-last-race points-10\\">+10</div></div></div>"`;

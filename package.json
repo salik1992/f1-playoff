@@ -23,6 +23,15 @@
         "extends": [
             "react-app",
             "react-app/jest"
+        ],
+        "rules": {
+            "react-hooks/exhaustive-deps": "off"
+        }
+    },
+    "jest": {
+        "resetMocks": false,
+        "testMatch": [
+            "**/__tests__/**/*.spec.[jt]s?(x)"
         ]
     },
     "browserslist": {
